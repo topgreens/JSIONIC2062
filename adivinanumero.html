@@ -1,0 +1,112 @@
+<!--EJERCICIO ADIVINA NUMERO
+HACED UNA APP QUE GENERE UN NÚMERO ALEATORIO ENTRE 1 Y 100 
+Y DÉ 5 INTENTOS AL USUARIO PARA
+AVERIGUARLO. EN CASO DE FALLO, EL PROGRAMA INFORMA SI EL NÚMERO INTRODUCIDO
+ES MAYOR O MENOR. SI ACIERTA, LE FELICITAMOS CON UN MENSAJE Y SI GASTA TODAS
+LAS VIDAS, LE DAMOS EL PÉSAME-->
+
+<!--pseudoCÓDIGO
+        1// GENERAR EL NÚMERO ALEATORIO
+
+        2// PEDIRLE EL NÚMERO AL USUARIO
+
+        3// COMPARAR 
+
+        3.1// QUE SEA MAYOR - MENSAJE INFORMATIVO, volver al 2
+
+        3.2// QUE SEA MENOR - MENSAJE INFORMATIVO, volver al 2
+
+        3.3// QUE SEA IGUAL - HAS TRIUNFADO, MENSAJE DE ENHORABUENA, FIN.
+
+        4//VOLVEMOS AL 2, SI NO HA ACERTADO Y LE QUE QUEDAN VIDAS
+
+    -->
+
+
+
+
+<html>
+
+<head>
+    <script>
+        const PREGUNTA = "Introduce nº entre 1 y 100";
+        const NUM_MAX_INTENTOS = 5;
+        //window.onload = jugar;
+
+        function jugar() {
+            var numero_usuario;
+            var acertado = false;
+            var num_intentos = NUM_MAX_INTENTOS; //representa los intentos que le quedan
+            console.log("Empieza la partida");
+            var numero_secreto = genererarNumeroAleatorio(0, 100);
+            do {
+
+                numero_usuario = pedirNumero ();
+                num_intentos = num_intentos - 1;//num_intentos--;
+                if (numero_secreto == numero_usuario) {
+                    acertado = true;
+                    console.log("Ha acertado");
+                    enhorabuena();
+                } else if (numero_usuario < numero_secreto) {
+                    console.log("El numero introducido es menor");
+                    informarMenor();
+                } else {
+                    console.log("El numero introducido es mayor que el buscado");
+                    informarMayor();
+                }
+            } while ((!acertado)&&(num_intentos>0));//NO HA ACERTADO Y LE QUEDAN INTENTOS
+            if (!acertado)
+            {
+                alert ("HAS PALMADO, SOCIO. BUSCÁBAMOS " + numero_secreto);
+            }
+
+
+
+        }
+
+        function informarMenor() {
+            alert("EL NÚMERO BUSCADO ES MAYOR");
+        }
+
+        function informarMayor() {
+            alert("EL NÚMERO BUSCADO ES MENOR");
+        }
+
+
+        function enhorabuena() {
+            alert("QUÉ SUERTE TIENES, LADRÓN. ENHORABUENA!! :)");
+        }
+
+
+
+
+        function genererarNumeroAleatorio(lim_inferior, lim_superior) {
+            var num_aleatorio = 0;
+
+            var n1 = Math.random();//entro 0 y 1
+            num_aleatorio = (n1 * (lim_superior - lim_inferior + 1)) + lim_inferior
+            num_aleatorio = Math.ceil(num_aleatorio);//redondeo
+
+            return num_aleatorio;
+        }
+
+
+
+        function pedirNumero() {
+            var numero_string;
+            var numero_entero;
+           
+             num_introducido = prompt(PREGUNTA);
+             numero_entero = parseInt(num_introducido);
+
+            return numero_entero;
+        }
+    </script>
+</head>
+
+<body>
+
+    <button onclick="jugar();">EMEPEZAR JUEGO</button>
+</body>
+
+</html>

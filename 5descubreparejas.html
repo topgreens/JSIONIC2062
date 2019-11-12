@@ -1,0 +1,61 @@
+<html>
+
+<head>
+    <title>
+        WEB CON JS
+    </title>
+    <link rel="stylesheet" type="text/css" href="estilo2.css">
+    <script language="javascript">
+        window.onload = iniciarTablero;
+        
+        function iniciarTablero() {
+            console.log("Inicia Tablero . . .");
+        
+            var td_actual;
+            var hijo_img;
+
+            var lista_td = document.querySelectorAll("td");
+            for (var i = 0; i < lista_td.length; i++) {
+                td_actual = lista_td[i];
+                td_actual.addEventListener('click', tocadoImagen);
+                hijo_img = td_actual.firstElementChild;
+                hijo_img.style.visibility = 'hidden';
+            }
+            console.log("Fin Inicia Tablero . . .");
+        
+        }
+
+        function tocadoImagen() {
+
+            
+            console.log("El usuario tocó el td ");
+            console.log("THIS " + this);
+            var imagen = this.firstElementChild;
+            imagen.style.visibility = 'visible';
+
+        }
+    </script>
+</head>
+
+<body>
+    <table id="tabla">
+       <tr>
+            <td>
+                <img src="delgado.jpg">
+            </td>
+            <td>
+                <img src="pantera.jpg">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="delgado.jpg">
+            </td>
+            <td>
+                <img src="pantera.jpg">
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
