@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Api</title>
+<head>
+    <meta charset="UTF-8">
+    <script>
+
+        var xmlHttp;
+        onload=cargarInfoSitio;
+
+        //1 Obtener API propia https://developers.google.com/places/web-service/get-api-key
+        //2 Elegir un lugar ID_LUGAR https://developers.google.com/places/web-service/place-id
+        //2 Instalar FIREFOX
+        //3 Instalar extensión CORS Everywhere para ese navegador
+        //4 Activar extensión
+
+        const ID_LUGAR = "ChIJd3WcsXiKQQ0R6QCqzzeHf_Y";
+        const CLAVE_API_GOOGLE_PLACES = "TU_API_KEY"
+
+        const URI = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + ID_LUGAR + "&key=" + CLAVE_API_GOOGLE_PLACES;
+
+        function cargarInfoSitio() {
+            xmlHttp= new XMLHttpRequest();
+            xmlHttp.onreadystatechange = procesarEventosRecibir;
+            xmlHttp.open('GET', URI, true);
+            xmlHttp.send(null);
+
+        }
+
+        function procesarEventosRecibir() {
+            if (xmlHttp.readyState == 4)
+            {
+                if (xmlHttp.status == 200)
+                {
+                    var cuerpo = xmlHttp.responseText;
+                    var objeto_js = JSON.parse(cuerpo);
+                    console.log("OPINIONES " + objeto_js.result.reviews);
+                    console.log("NOMBRE AUTOR " + objeto_js.result.reviews[1].author_name);
+                } else {
+                    console.log ("error " +xmlHttp.status);
+                }
+            } 
+        }
+
+    document.getElementById('getData').addEventListener('click', getData);
+
+    function getData(event) {
+    event.preventDefault();
+    const ul = document.getElementById('characters');
+
+    fetch('https://swapi.co/api/people/5') // Call the fetch function passing the url of the API as a parameter
+        .then(function (response) {
+            // for handling the data from the API
+            return response.json();
+        })
+        .then((data) => {
+            let result = `<h1> Characters From GoogleAPI</h1>`;
+            for (let i = 0; i < 5; i++) {
+                result +=
+            `<div>
+                <ul class="info">
+                    <li> author_name: ${data.name}</li>
+                    <li> profile_photo_url: ${data.profile_photo}</li>
+                    <li> text: ${data.text} </li><br />
+                </ul>
+            </div>`;
+                document.getElementById('result').innerHTML = result;
+            }
+        })}
+    </script>
+</head>
+
+<body>
+    <div></div>
+</body>
+
+</html>
