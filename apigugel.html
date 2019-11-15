@@ -10,7 +10,7 @@
     <script>
 
         var xmlHttp;
-        onload=cargarInfoSitio;
+       // onload=cargarInfoSitio;
 
         //1 Obtener API propia https://developers.google.com/places/web-service/get-api-key
         //2 Elegir un lugar ID_LUGAR https://developers.google.com/places/web-service/place-id
@@ -19,11 +19,11 @@
         //4 Activar extensión
 
         const ID_LUGAR = "ChIJd3WcsXiKQQ0R6QCqzzeHf_Y";
-        const CLAVE_API_GOOGLE_PLACES = "TU_API_KEY"
+        const CLAVE_API_GOOGLE_PLACES = "AIzaSyAHKihLAG_oSPP8V_JtylCcT2zs-FBRxJ0"
 
-        const URI = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + ID_LUGAR + "&key=" + CLAVE_API_GOOGLE_PLACES;
+        const URI = "https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJd3WcsXiKQQ0R6QCqzzeHf_Y&key=AIzaSyAHKihLAG_oSPP8V_JtylCcT2zs-FBRxJ0";
 
-        function cargarInfoSitio() {
+        /*function cargarInfoSitio() {
             xmlHttp= new XMLHttpRequest();
             xmlHttp.onreadystatechange = procesarEventosRecibir;
             xmlHttp.open('GET', URI, true);
@@ -32,50 +32,88 @@
         }
 
         function procesarEventosRecibir() {
-            if (xmlHttp.readyState == 4)
-            {
-                if (xmlHttp.status == 200)
-                {
+            if (xmlHttp.readyState == 4){
+                if (xmlHttp.status == 200){
                     var cuerpo = xmlHttp.responseText;
                     var objeto_js = JSON.parse(cuerpo);
                     console.log("OPINIONES " + objeto_js.result.reviews);
-                    console.log("NOMBRE AUTOR " + objeto_js.result.reviews[1].author_name);
+                    console.log("NOMBRE AUTOR " + objeto_js.result.reviews[3].author_name);
                 } else {
                     console.log ("error " +xmlHttp.status);
                 }
-            } 
-        }
+            } */
 
-    document.getElementById('getData').addEventListener('click', getData);
+           /*
 
-    function getData(event) {
-    event.preventDefault();
-    const ul = document.getElementById('characters');
-
-    fetch('https://swapi.co/api/people/5') // Call the fetch function passing the url of the API as a parameter
+         fetch('URI') // Call the fetch function passing the url of the API as a parameter
         .then(function (response) {
             // for handling the data from the API
-            return response.json();
+            return JSON.parse(cuerpo);
         })
         .then((data) => {
             let result = `<h1> Characters From GoogleAPI</h1>`;
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 3; i++) {
                 result +=
             `<div>
                 <ul class="info">
                     <li> author_name: ${data.name}</li>
                     <li> profile_photo_url: ${data.profile_photo}</li>
-                    <li> text: ${data.text} </li><br />
+                    <li> opiniones: ${data.opiniones} </li><br />
                 </ul>
             </div>`;
                 document.getElementById('result').innerHTML = result;
             }
-        })}
+        })    
+
+               <li> profile_photo_url: ${reviews[i].profile_photo}</li>
+                    <li> opiniones: ${reviews[i].opiniones} </li><br />
+        }*/
+
+        fetch(URI)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+      let reviews = myJson.result.reviews;
+      let result_string = '';
+
+      for (let i = 0; i < reviews.length; i++) {
+            result_string +=
+            `<div>
+                <ul class="info">
+                    <li> author_name: ${reviews[i].author_name}</li>
+                   <li> profile_photo_url:<img src="${reviews[i].profile_photo_url}" style="width:150px"></li><br />
+                    <li id"bord"> opiniones: ${reviews[i].text} </li>
+                </ul>
+            </div>`;
+                document.getElementById('result').innerHTML = result_string;
+            }
+
+    console.log(myJson);
+  });
+
     </script>
 </head>
-
+<style>
+        h1 {
+          color: blue;
+          font-family: verdana;
+          font-size: 200%;
+        
+        }
+       .ul{
+         list-style: none;
+        }
+        #li{
+            border-left: 15px solid red;
+            background-color: lightgrey;
+        }
+        </style>
 <body>
-    <div></div>
+    <h1>Characters From GoogleAPI</h1>
+    <div id="result">
+        <img src="profile_photo_url">
+    </div>
 </body>
 
 </html>
